@@ -1,0 +1,12 @@
+.grid-layout{
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0px, 1fr));
+    column-gap: 1.5rem;
+}
+.grid-layout .grid-layout-col {
+    display: grid;
+    grid-template-columns: minmax(0px,1fr);
+    height: fit-content;
+    row-gap: 1.5rem;
+}

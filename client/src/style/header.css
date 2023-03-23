@@ -1,0 +1,34 @@
+header {
+    display: flex;
+    gap: 1rem;
+}
+
+.add-photo {
+color: #FFFFFF;
+background: #3DB46D;
+}
+
+.search-box
+{
+    width: 300px;
+    border: 1px solid #BDBDBD;
+}
+
+.search-box::placeholder {
+    background-image: url(../../public/assets/img/search.svg);
+    background-repeat: no-repeat;
+    background-size: 18px;
+    padding-left: 2rem;
+    background-position: 0px -2px;
+}
+
+.header-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header-container:last-child {
+    margin-left: auto;
+    gap: 1rem;
+}
