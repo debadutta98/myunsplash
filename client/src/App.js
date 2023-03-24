@@ -55,7 +55,7 @@ function App() {
       setSearchInput(event.target.value)
     }}/>
     {
-      searchInput && isLoading ?
+      isLoading ?
       <p style={{ marginTop: '3rem', textAlign: 'center', fontFamily: 'Noto Sans' }}>Loading...</p> :
       <Gallery images={searchInput ? searchResults : images} />
     }
