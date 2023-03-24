@@ -9,13 +9,7 @@ function App() {
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const imageResults = useMemo(() => {
-    if(searchResults.length > 0) {
-      return searchResults;
-    } else {
-      return images;
-    }
-  }, [searchResults, images]);
+
   useEffect(()=>{
     const updateImageListHandler = (snapshot) => {
     const imageList = [];
@@ -56,15 +50,14 @@ function App() {
       return ()=>clearTimeout(timeout);
     }
   },[searchInput, images]);
-
   return <>
     <Header onSearchInputChange={(event) => {
       setSearchInput(event.target.value)
     }}/>
     {
-      isLoading ?
+      searchInput && isLoading ?
       <p style={{ marginTop: '3rem', textAlign: 'center', fontFamily: 'Noto Sans' }}>Loading...</p> :
-      <Gallery images={imageResults} />
+      <Gallery images={searchInput ? searchResults : images} />
     }
     </>;
 }

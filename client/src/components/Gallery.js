@@ -1,6 +1,5 @@
 import '../style/gallery.css';
 import ImageCard from './UI/ImageCard';
-import React from 'react';
 const Gallery = ({images}) => {
     let imageList = [[],[],[]];
     if(images.length > 0) {
@@ -23,4 +22,4 @@ const Gallery = ({images}) => {
     )
 };
 
-export default React.memo(Gallery);
+export default Gallery;
