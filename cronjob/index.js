@@ -7,6 +7,7 @@ import {config} from 'dotenv';
 import axios from 'axios';
 import { createRequire } from "module";
 import { Agent } from 'https';
+import { URL } from 'url';
 
 const require = createRequire(import.meta.url);
 const serviceAccount = require('./serviceAccountKey.json');
@@ -38,7 +39,7 @@ const httpsAgent = new Agent({
 
 const getImageList = async () => {
 try {
-    const snapshot =await rootRef.get();
+    const snapshot = await rootRef.get();
     const count = imageCount - snapshot.val.length;
     if(count > 0) {
         const response = await axios.get('https://api.unsplash.com/photos/random/', {
@@ -52,12 +53,13 @@ try {
             const remainingRequest = +response.headers['X-Ratelimit-Remaining'];
             if (Array.isArray(response.data)) {
                 return {
-                    imageList: response.data.map((value) => (
-                        {
+                    imageList: response.data.map((value) => {
+                        const url = new URL(value.urls.full);
+                        return {
                             imageLable: convertDescription(value.description),
-                            imageUrl: value.urls.full
+                            imageUrl: url.origin + url.pathname + '?q=10'
                         }
-                    )),
+                }),
                     remainingRequest
                 }
             } else {

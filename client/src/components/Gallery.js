@@ -14,7 +14,7 @@ const Gallery = ({images}) => {
         }
     }
     return (imageList[0].length === 0 ? 
-        <p style={{ marginTop:'3rem', textAlign:'center', fontFamily: 'Noto Sans' }}>Loading...</p> : 
+        <p style={{ marginTop:'3rem', textAlign:'center', fontFamily: 'Noto Sans' }}>No Results Found</p> : 
         <div className="grid-layout"> 
             {imageList[0].length > 0 && <div className='grid-layout-col'>{imageList[0].map((img) => <ImageCard key={img.id} label={img.imageLable} image={img.imageUrl} imgId={img.id} />)}</div>}
             {imageList[1].length > 0 && <div className='grid-layout-col'>{imageList[1].map((img) => <ImageCard key={img.id} label={img.imageLable} image={img.imageUrl} imgId={img.id}  />)}</div>}

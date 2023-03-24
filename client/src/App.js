@@ -17,9 +17,9 @@ function App() {
     }
   }, [searchResults, images]);
   useEffect(()=>{
-    const updateImageList=(snapshot) => {
-      const imageList = [];
-      if (snapshot.exists()) {
+    const updateImageListHandler = (snapshot) => {
+    const imageList = [];
+    if (snapshot.exists()) {
         const imagesObj = snapshot.exportVal();
         for (const imageId of Object.keys(snapshot.exportVal())) {
           imageList.push({
@@ -27,14 +27,21 @@ function App() {
             ...imagesObj[imageId]
           })
         }
-    } 
+    }
     setImages(imageList);
-  };
-  const updateImageListError = (error) => {
-    console.error(error);
-  };
-    getImageList().then(updateImageList).catch(updateImageListError)
-    onValue(reference,updateImageList,updateImageListError)
+    };
+    const updateImageListErrorHandler = (error) => {
+      console.error(error);
+    };
+    setIsLoading(true);
+    getImageList().then((snapshot)=>{
+      updateImageListHandler(snapshot);
+      setIsLoading(false);
+    }).catch((error)=>{
+      setIsLoading(false);
+      updateImageListErrorHandler(error);
+    })
+    onValue(reference,updateImageListHandler,updateImageListHandler)
   },[]);
   useEffect(()=>{
     if(!searchInput){
@@ -42,7 +49,6 @@ function App() {
     } else {
       setIsLoading(true);
       const timeout = setTimeout((input,imageList) => {
-
         const filterImages = imageList.filter((value) => value.imageLable.toLowerCase().includes(input.toLowerCase()));
         setSearchResults(filterImages);
         setIsLoading(false);
@@ -50,16 +56,16 @@ function App() {
       return ()=>clearTimeout(timeout);
     }
   },[searchInput, images]);
-  // render result
-  let result = <Gallery images={imageResults} />;
-  if (searchInput && searchResults.length === 0 && !isLoading) {
-      result = <p style={{ marginTop: '3rem', textAlign: 'center', fontFamily: 'Noto Sans' }}>No Result Found</p>;
-  }
+
   return <>
     <Header onSearchInputChange={(event) => {
       setSearchInput(event.target.value)
     }}/>
-    {result}
+    {
+      isLoading ?
+      <p style={{ marginTop: '3rem', textAlign: 'center', fontFamily: 'Noto Sans' }}>Loading...</p> :
+      <Gallery images={imageResults} />
+    }
     </>;
 }
 

@@ -7,7 +7,7 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function ImageCard(props){
     const [showModel, setShowModel] = useState(false);
     return <> 
-        {showModel && <DeleteImage imgLabel={props.label} imageId={props.imgId} onClose={()=>setShowModel(false)} />}
+    {showModel && <DeleteImage imgLabel={props.label} imageId={props.imgId} onClose={()=>setShowModel(false)} />}
     <div className='img-card'>
         <div className='img-overlay'></div>
         <span className='img-label'>{props.label}</span>
